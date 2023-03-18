@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  postgres:
+    image: envkeeper/postgres-image:latest
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: pg_isready -U postgres
+    ports:
+      - 5432:5432
+    networks:
+      default:
+        aliases:
+          - postgres
+
+  redis:
+    image: 'redis:latest'
+    ports:
+      - 6379:6379
+    volumes:
+      - 'redis:/var/lib/redis/data'
+
+volumes:
+  redis:
+  postgres:
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 13.14.15.16/24
+          gateway: 13.14.15.1
+

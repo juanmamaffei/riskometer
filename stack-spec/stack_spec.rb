@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ENV['MT_NO_PLUGINS'] = '1' # Work around stupid autoloading of plugins
 require 'minitest/global_expectations/autorun'
 
@@ -63,15 +64,15 @@ describe 'roda-sequel-stack' do
       Process.kill(:INT, pid)
       Process.wait(pid)
     end
-    read.close if read
-    write.close if write
+    read&.close
+    write&.close
   end
 
   # Run command capturing stderr/stdout
   def run_cmd(*cmds)
     command(cmds)
     read, write = IO.pipe
-    system(*cmds, out: write, err: write).tap{|x| unless x; write.close; p cmds; puts read.read; end}.must_equal true
+    system(*cmds, out: write, err: write).tap {|x| x ? write.close; p cmds; puts read.read : nil}.must_equal true
     write.close
     progress(read.read)
     read.close
@@ -82,7 +83,7 @@ describe 'roda-sequel-stack' do
   end
 
   it 'should work after rake setup is run' do
-    run_cmd("git", "clone", ".", TEST_STACK_DIR)
+    run_cmd('git', 'clone', '.', TEST_STACK_DIR)
 
     Dir.chdir(TEST_STACK_DIR) do
       run_cmd(RAKE, 'setup[FooBarApp]')
@@ -99,21 +100,21 @@ describe 'roda-sequel-stack' do
         end
       end
 
-      directories.sort.must_equal  [
-        ".", "./assets", "./assets/css", "./migrate", "./models", "./public", "./routes",
-        "./spec", "./spec/model", "./spec/web", "./views"
+      directories.sort.must_equal [
+        '.', './assets', './assets/css', './migrate', './models', './public', './routes',
+        './spec', './spec/model', './spec/web', './views'
       ]
       files.sort.must_equal [
-        "./.env.rb", "./.gitignore", "./Gemfile", "./README.rdoc", "./Rakefile", "./app.rb",
-        "./assets/css/app.scss", "./config.ru", "./db.rb", "./migrate/001_tables.rb",
-        "./models.rb", "./models/model1.rb", "./routes/prefix1.rb", "./spec/coverage_helper.rb",
-        "./spec/minitest_helper.rb", "./spec/model.rb", "./spec/model/model1_spec.rb",
-        "./spec/model/spec_helper.rb", "./spec/web.rb", "./spec/web/prefix1_spec.rb",
-        "./spec/web/spec_helper.rb", "./views/index.erb", "./views/layout.erb"
+        './.env.rb', './.gitignore', './Gemfile', './README.rdoc', './Rakefile', './app.rb',
+        './assets/css/app.scss', './config.ru', './db.rb', './migrate/001_tables.rb',
+        './models.rb', './models/model1.rb', './routes/prefix1.rb', './spec/coverage_helper.rb',
+        './spec/minitest_helper.rb', './spec/model.rb', './spec/model/model1_spec.rb',
+        './spec/model/spec_helper.rb', './spec/web.rb', './spec/web/prefix1_spec.rb',
+        './spec/web/spec_helper.rb', './views/index.erb', './views/layout.erb'
       ]
 
       rewrite('migrate/001_tables.rb') do |s|
-        s.sub("primary_key :id", "primary_key :id; String :name")
+        s.sub('primary_key :id', 'primary_key :id; String :name')
       end
 
       # Test migrations
@@ -124,10 +125,10 @@ describe 'roda-sequel-stack' do
       run_cmd(RAKE, 'dev_down')
       run_cmd(RAKE, 'dev_bounce')
       run_cmd(RAKE, 'prod_up')
-      
+
       Dir.mkdir('views/prefix1')
-      File.binwrite('views/prefix1/p1.erb', "<p>Model1: <%= Model1.first.name %></p>")
-      rewrite('routes/prefix1.rb'){|s| s.sub("# /prefix1 branch handling", "r.get{view 'p1'}")}
+      File.binwrite('views/prefix1/p1.erb', '<p>Model1: <%= Model1.first.name %></p>')
+      rewrite('routes/prefix1.rb') {|s| s.sub('# /prefix1 branch handling', "r.get{view 'p1'}")}
       run_cmd(SEQUEL, db_url, '-c', "DB[:model1s].insert(name: 'M1')")
 
       # Test running in development mode
@@ -138,9 +139,9 @@ describe 'roda-sequel-stack' do
 
       # Test running with refrigerator
       rewrite('config.ru') do |s|
-        s.sub(/^#freeze_core/, "freeze_core").
-          gsub("#require", "require").
-          sub('#Gem', 'Gem')
+        s.sub(/^#freeze_core/, 'freeze_core')
+          .gsub('#require', 'require')
+          .sub('#Gem', 'Gem')
       end
       run_rackup('-E', 'production', '-s', 'webrick')
 

@@ -1,13 +1,21 @@
+# frozen_string_literal: true
+
 begin
-  require_relative '.env.rb'
+  require_relative '.env'
 rescue LoadError
 end
 
 require 'sequel/core'
 
-# Delete APP_DATABASE_URL from the environment, so it isn't accidently
-# passed to subprocesses.  APP_DATABASE_URL may contain passwords.
-DB = Sequel.connect(ENV.delete('APP_DATABASE_URL') || ENV.delete('DATABASE_URL'))
+DB = Sequel.connect(
+  adapter: :postgres,
+  user: 'postgres',
+  password: 'password',
+  host: 'localhost',
+  port: 5432,
+  database: 'riskometer_development',
+  max_connections: 10
+)
 
 # Load Sequel Database/Global extensions here
 # DB.extension :date_arithmetic
@@ -15,8 +23,7 @@ DB.extension :pg_auto_parameterize if DB.adapter_scheme == :postgres && Sequel::
 
 # createuser -U postgres riskometer
 # createdb -U postgres -O riskometer riskometer_production
-#     
+#
 # createdb -U postgres -O riskometer riskometer_test
 # createdb -U postgres -O riskometer riskometer_development
-# 
-
+#

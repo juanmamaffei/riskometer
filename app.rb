@@ -101,5 +101,19 @@ class App < Roda
     r.root do
       view 'index'
     end
+
+    r.get 'start' do
+      view 'start'
+    end
+
+    r.get 'questions' do
+      @questions = Question.all
+      view 'questions'
+    end
+
+    r.get 'warranty_plans' do
+      #@warranty_plans = WarrantyPlan.all
+      view 'warranty_plans'
+    end
   end
 end

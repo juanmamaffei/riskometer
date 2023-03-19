@@ -12,7 +12,7 @@ DB = Sequel.connect(
   user: 'postgres',
   password: 'password',
   host: 'localhost',
-  port: 5432,
+  port: 5050,
   database: 'riskometer_development',
   max_connections: 10
 )

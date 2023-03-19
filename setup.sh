@@ -15,7 +15,7 @@ else
   docker-compose build
 fi
 
-docker-compose up --detach postgres redis
+docker-compose up --detach postgres
 
 docker-compose up -d
 

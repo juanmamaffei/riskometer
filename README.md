@@ -2,6 +2,10 @@
 
 Riskometer is a web application that helps estimate the warranty risk level of product categories.
 
+<!--Insert image from public folder:-->
+
+![riskometer](public/riskometer_logo.png)
+
 ## Getting Started
 
 To get started with the project, follow these steps:

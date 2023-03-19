@@ -12,7 +12,15 @@ To get started with the project, follow these steps:
 
 1. Clone the repository
 2. Install dependencies with `bundle install`
-3. Set up the database with `rake db:setup`
+3. Set up the database with `./setup.sh`
+
+  Then, you've to create the user and the database in Docker terminal.
+
+	  createuser -U postgres riskometer
+    createdb -U postgres -O riskometer riskometer_production
+    createdb -U postgres -O riskometer riskometer_test
+    createdb -U postgres -O riskometer riskometer_development
+
 4. Start the server with `rackup`
 
 ## Usage

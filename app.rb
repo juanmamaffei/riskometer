@@ -17,15 +17,15 @@ class App < Roda
          'X-Content-Type-Options' => 'nosniff',
          'X-XSS-Protection' => '1; mode=block'
 
-  plugin :content_security_policy do |csp|
-    csp.default_src :none
-    csp.style_src :self, 'https://maxcdn.bootstrapcdn.com'
-    csp.form_action :self
-    csp.script_src :self
-    csp.connect_src :self
-    csp.base_uri :none
-    csp.frame_ancestors :none
-  end
+  #plugin :content_security_policy do |csp|
+    #csp.default_src :none
+    #csp.style_src :self, 'https://maxcdn.bootstrapcdn.com'
+    #csp.form_action :self
+    #csp.script_src :self
+    #csp.connect_src :self
+    #csp.base_uri :none
+    #csp.frame_ancestors :none
+  #end
 
   plugin :route_csrf
   plugin :flash

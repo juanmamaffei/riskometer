@@ -1,19 +1,71 @@
-<div class="container mt-5">
+    <div class="container mt-5">
       <p class="lead">Answer a few questions to estimate the risk level of your product</p>
-      <form>
-        <div class="form-group">
-          <label for="category">Product category:</label>
-          <input type="text" class="form-control" id="category" placeholder="Enter category">
-        </div>
-        <div class="form-group">
-          <label for="question1">Question 1:</label>
-          <input type="text" class="form-control" id="question1" placeholder="Enter answer">
-        </div>
-        <div class="form-group">
-          <label for="question2">Question 2:</label>
-          <input type="text" class="form-control" id="question2" placeholder="Enter answer">
-        </div>
-        <button type="submit" class="btn btn-primary">Estimate risk level</button>
-      </form>
-    </div>
+
+  <form>
+    <div class="form-group">
+  <label for="q1">How often is the product exposed to humid or wet environments?</label>
+  <select class="form-control" id="q1">
+    <option value="0">Rarely or never</option>
+    <option value="1">Occasionally</option>
+    <option value="2">Frequently</option>
+    <option value="3">Very frequently</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="q2">How often is the product exposed to extreme temperatures (hot or cold)?</label>
+  <select class="form-control" id="q2">
+    <option value="0">Rarely or never</option>
+    <option value="1">Occasionally</option>
+    <option value="2">Frequently</option>
+    <option value="3">Very frequently</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="q3">How often is the product subject to vibrations or sudden movements?</label>
+  <select class="form-control" id="q3">
+    <option value="0">Rarely or never</option>
+    <option value="1">Occasionally</option>
+    <option value="2">Frequently</option>
+    <option value="3">Very frequently</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="q4">How secure is the area where the product is used?</label>
+  <select class="form-control" id="q4">
+    <option value="0">Very secure</option>
+    <option value="1">Somewhat secure</option>
+    <option value="2">Not very secure</option>
+    <option value="3">Not at all secure</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="q5">How secure is the area where the product is stored?</label>
+  <select class="form-control" id="q5">
+    <option value="0">Very secure</option>
+    <option value="1">Somewhat secure</option>
+    <option value="2">Not very secure</option>
+    <option value="3">Not at all secure</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="q6">How likely is it that the product will be accidentally dropped or mishandled?</label>
+  <select class="form-control" id="q6">
+    <option value="0">Very unlikely</option>
+    <option value="1">Somewhat unlikely</option>
+    <option value="2">Somewhat likely</option>
+    <option value="3">Very likely</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="q7">How frequently is the product used?</label>
+  <select class="form-control" id="q7">
+    <option value="0">Rarely or never</option>
+    <option value="1">Occasionally</option>
+    <option value="2">Frequently</option>
+    <option value="3">Very frequently</option>
+  </select>
+</div>
+
+    <button type="submit" class="btn btn-primary">Estimate Risk Level</button>
+  </form>    </div>
 
